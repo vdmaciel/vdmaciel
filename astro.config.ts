@@ -12,6 +12,7 @@ import rehypeKatex from 'rehype-katex'
 import rehypeShiki from '@shikijs/rehype'
 import remarkEmoji from 'remark-emoji'
 import remarkMath from 'remark-math'
+import rehypeImageZoom from './src/lib/rehype-image-zoom.ts';
 
 import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-sections'
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
@@ -44,6 +45,7 @@ export default defineConfig({
       ],
       rehypeHeadingIds,
       rehypeKatex,
+      rehypeImageZoom,
       [
         rehypeExpressiveCode,
         {
