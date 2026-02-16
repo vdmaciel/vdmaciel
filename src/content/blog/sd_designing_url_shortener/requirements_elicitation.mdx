@@ -1,0 +1,74 @@
+---
+title: 'Requirements elicitation'
+description: ''
+order: 1
+date: 2026-01-26
+tags: [System Design]
+authors: ['vdmaciel']
+---
+import Callout from '@/components/Callout.astro'
+
+So... this is the stage where I think that we should avoid jumping straight into diagrams and instead
+focus on trying to understand the problem and the requirements. I will try to do that by asking possible questions and
+writing down the answers.
+
+#### Question: What is the purpose of the URL shortener, and how it works?
+<Callout title="" variant="answer">
+  The purpose of a URL shortener is to take a long URL and convert it into a shorter, more manageable version.
+  This is often done to make it easier to share links on social media, in emails, or in other contexts where space is limited.
+  The way it works is by generating a unique identifier (often a random string of characters) that maps to the original long URL.
+  When someone clicks on the shortened URL, the system looks up the identifier and redirects the user to the original long URL.
+</Callout>
+
+#### Question: What are the key features and functionalities that the URL shortener should have?
+<Callout title="" variant="answer">
+  1. **URL shortening:** The core functionality of the system is to take a long URL and generate a short URL.
+  2. **Redirection:** When a user clicks on the short URL, they should be redirected to the original long URL.
+  3. **Analytics:** The system should track the number of clicks on each short URL, as well as other relevant metrics such as the geographic location of the clicks and the time of the clicks.
+  4. **Custom aliases:** Users should have the option to create custom short URLs instead of random strings.
+  5. **Expiration:** The system should allow users to set an expiration date for their short URLs, after which they will no longer be valid.
+</Callout>
+
+
+#### Question: What are the performance and scalability requirements for the URL shortener?
+<Callout title="" variant="answer">
+  1. **High availability:** The system should be available 24/7, with minimal downtime.
+  2. **Low latency:** The redirection process should be fast, ideally under 100 milliseconds.
+  3. **Scalability:** The system should be able to handle a large number of requests, especially during peak times. It should be designed to scale horizontally to accommodate increasing traffic.
+  4. **Data storage:** The system should be able to store a large number of URL mappings efficiently, and it should be designed to handle potential growth in the number of URLs over time.
+</Callout>
+
+#### Question: How long should be the short URL?
+<Callout title="" variant="answer">
+  The length of the short URL can vary, but a common approach is to use a fixed length of 6 to 8 characters for the unique identifier.
+</Callout>
+
+#### Question: What characters should be allowed in the short URL?
+<Callout title="" variant="answer">
+  The short URL can include a combination of uppercase letters, lowercase letters, and digits.
+</Callout>
+
+#### Question: Can a shortened URL be deleted or updated after it has been created?
+<Callout title="" variant="answer">
+  Yes, the system should allow users to delete or update their shortened URLs.
+</Callout>
+
+#### Question: What is the expected traffic volume for the URL shortener?
+<Callout title="" variant="answer">
+  The system should be able to handle 100 million URL shortening requests per day and 1 billion redirection requests per day.
+</Callout>
+
+## Back of the envelope calculations
+<Callout title="" variant="proposition">
+  1. **Write operation:**
+      - 100 million URL shortening requests per day = 100 million / (24 * 60 * 60) ≈ 1160 requests per second.
+  2. **Read operation:**
+      - 1 billion redirection requests per day = 1 billion / (24 * 60 * 60) ≈ 11,600 requests per second.
+  3. **Assuming that the URL shortener will run for 10 years, we can calculate the total number of URLs that will be shortened over that period:**
+      - Total URLs = 100 million requests/day * 365 days/year * 10 years = 365 billion URLs.
+  4. **Assuming that each URL mapping takes approximately 100 bytes of storage (including the original URL, the short URL, and metadata), we can estimate the total storage required:**
+      - Total storage = 365 billion URLs * 100 bytes/URL = 36.5 terabytes (TB).
+</Callout>
+
+
+

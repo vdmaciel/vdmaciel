@@ -1,0 +1,110 @@
+---
+title: 'API Design'
+description: ''
+order: 2
+date: 2026-01-27
+tags: [System Design]
+authors: ['vdmaciel']
+---
+import Callout from '@/components/Callout.astro'
+
+Now that we have a clear understanding of the requirements, we can start thinking about the API design for our URL shortener.
+The API will consist of endpoints that allow users to create short URLs, retrieve the original long URLs, and access analytics data.
+
+## Endpoint: Create Short URL
+**URL:** `/api/shorten` <br/>
+**Method:** POST <br/>
+**HTTP Response status**: 201 Created <br/>
+**Request Headers:** <br/>
+```http
+Content-Type: application/json
+Authorization: Bearer <token>
+```
+**Request Body:** <br/>
+```json
+{
+  "longUrl": "https://www.example.com/some/very/long/url",
+  "customAlias": "myalias", // optional
+  "expirationDate": "2026-12-31T23:59:59Z" // optional
+}
+```
+**Response:** <br/>
+```json
+{
+  "shortUrl": "https://short.ly/myalias",
+  "longUrl": "https://www.example.com/some/very/long/url",
+  "expirationDate": "2026-12-31T23:59:59Z"
+}
+```
+
+---
+
+## Endpoint: Redirect to Long URL
+**URL:** `/{shortUrl}` <br/>
+**Method:** GET <br/>
+**HTTP Response status**: 302 Temporary Redirect <br/>
+**Response:** Redirects to the original long URL <br/>
+
+---
+
+## Endpoint: Get Analytics
+**URL:** `/api/analytics/{shortUrl}` <br/>
+**Method:** GET <br/>
+**HTTP Response status**: 200 OK
+**Request Headers:** <br/>
+```http
+Content-Type: application/json
+Authorization: Bearer <token>
+```
+**Response:**
+```json
+{
+  "shortUrl": "https://short.ly/myalias",
+  "longUrl": "https://www.example.com/some/very/long/url",
+  "clicks": 12345,
+  "uniqueVisitors": 6789,
+  "topCountries": ["US", "IN", "BR"],
+  "topReferrers": ["https://www.google.com", "https://www.facebook.com"]
+}
+```
+
+---
+
+## Endpoint: Delete Short URL
+**URL:** `/api/delete/{shortUrl}` <br/>
+**Method:** DELETE <br/>
+**HTTP Response tatus**: 204 No Content <br/>
+**Request Headers:** <br/>
+```http
+Content-Type: application/json
+Authorization: Bearer <token>
+```
+**Response:** No content <br/>
+
+---
+
+## Endpoint: Update Short URL
+**URL:** `/api/update/{shortUrl}` <br/>
+**Method:** PUT <br/>
+**HTTP Response status**: 200 OK <br/>
+**Request Headers:** <br/>
+```http
+Content-Type: application/json
+Authorization: Bearer <token>
+```
+**Request Body:** <br/>
+```json
+{
+  "longUrl": "https://www.example.com/some/very/long/url",
+  "customAlias": "mynewalias", // optional
+  "expirationDate": "2027-12-31T23:59:59Z" // optional
+}
+```
+**Response:**
+```json
+{
+  "shortUrl": "https://short.ly/mynewalias",
+  "longUrl": "https://www.example.com/some/very/long/url",
+  "expirationDate": "2027-12-31T23:59:59Z"
+}
+```

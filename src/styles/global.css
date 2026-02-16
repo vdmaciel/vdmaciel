@@ -74,6 +74,30 @@
   --ring: oklch(0.556 0 0);
 }
 
+[data-theme='dark'] {
+  --background: oklch(0.145 0.03 255);
+  --foreground: oklch(0.985 0.01 255);
+  --primary: oklch(0.75 0.12 255);
+  --primary-foreground: oklch(0.15 0.02 255);
+  --muted: oklch(0.269 0.04 255);
+  --muted-foreground: oklch(0.708 0.05 255);
+  --destructive: oklch(0.704 0.191 22.216); /* keep red */
+  --border: oklch(1 0 0 / 10%);
+  --ring: oklch(0.65 0.10 255);
+}
+
+/*[data-theme='dark'] {*/
+/*  --background: oklch(0.145 0.03 145);*/
+/*  --foreground: oklch(0.985 0.01 145);*/
+/*  --primary: oklch(0.75 0.12 145);*/
+/*  --primary-foreground: oklch(0.15 0.02 145);*/
+/*  --muted: oklch(0.269 0.04 145);*/
+/*  --muted-foreground: oklch(0.708 0.05 145);*/
+/*  --destructive: oklch(0.704 0.191 22.216); !* keep red *!*/
+/*  --border: oklch(1 0 0 / 10%);*/
+/*  --ring: oklch(0.65 0.10 145);*/
+/*}*/
+
 @layer base {
   *,
   ::after,

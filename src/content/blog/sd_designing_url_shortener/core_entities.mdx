@@ -1,0 +1,33 @@
+---
+title: 'Core entities'
+description: ''
+order: 3
+date: 2026-01-28
+tags: [System Design]
+authors: ['vdmaciel']
+---
+
+Now let's talk about the core entities of our system. What are the actors and objects that we need to model
+to make our URL shortener work?
+
+## The URL mapping
+The most fundamental entity in our system is the URL mapping, which represents the relationship between a long URL and its corresponding short URL.
+This entity will have the following attributes:
+- `id`: A unique identifier for the URL mapping.
+- `longUrl`: The original long URL that the user wants to shorten.
+- `shortUrl`: The generated short URL that maps to the long URL.
+- `customAlias`: An optional custom alias for the short URL, if the user chooses to create one.
+- `expirationDate`: An optional expiration date for the short URL, after which it will no longer be valid.
+- `createdAt`: The timestamp when the URL mapping was created.
+
+
+## Analytics
+To provide analytics on the usage of our URL shortener, we can also model a Click entity that represents each click on a short URL. This entity will have the following attributes:
+- `shortUrl`: The generated short URL that maps to the long URL.
+- `clickCount`: A counter to track the number of times the short URL has been clicked
+- `lastAcessed`: The timestamp of the last time the short URL was accessed.
+
+And that's it!
+
+This is enough to model the core functionality of our URL shortener.
+We can always add more attributes or entities later on as we need them, but this is a good starting point for our design.
