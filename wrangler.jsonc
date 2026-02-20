@@ -1,6 +1,6 @@
 {
 	"main": "dist/_worker.js/index.js",
-	"name": "astro-erudite",
+	"name": "vdmaciel",
   "compatibility_date": "2026-02-20",
   "compatibility_flags": [
     "nodejs_compat",
