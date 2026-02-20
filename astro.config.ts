@@ -20,19 +20,25 @@ import type { ExpressiveCodeTheme } from 'rehype-expressive-code'
 
 import tailwindcss from '@tailwindcss/vite'
 
+import cloudflare from '@astrojs/cloudflare';
+
 export default defineConfig({
   site: 'https://astro-erudite.vercel.app',
   integrations: [mdx(), react(), sitemap(), icon()],
+
   vite: {
     plugins: [tailwindcss()],
   },
+
   server: {
     port: 1234,
     host: true,
   },
+
   devToolbar: {
     enabled: false,
   },
+
   markdown: {
     syntaxHighlight: false,
     rehypePlugins: [
@@ -106,4 +112,6 @@ export default defineConfig({
     ],
     remarkPlugins: [remarkMath, remarkEmoji],
   },
+
+  adapter: cloudflare(),
 })
