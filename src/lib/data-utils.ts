@@ -21,6 +21,15 @@ export async function getAllPostsAndSubposts(): Promise<
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 }
 
+export async function getAllNotes(): Promise<
+  CollectionEntry<'notes'>[]
+> {
+  const notes = await getCollection('notes')
+  return notes
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+}
+
 export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
   const projects = await getCollection('projects')
   return projects.sort((a, b) => {

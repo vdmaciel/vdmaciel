@@ -1,0 +1,76 @@
+---
+title: 'Mastering Backtracking'
+description: 'A deep dive into backtracking algorithms and their variations.'
+date: 2026-02-22
+tags: [DSA]
+authors: ['vdmaciel']
+image: './assets/banner.jpg'
+---
+import Callout from '@/components/Callout.astro'
+
+## Introduction
+In this series of posts, we will explore the backtracking algorithm and its variations.
+We will start with a general overview of what backtracking is and how it works, and then we will dive into specific
+types of problems that can be solved using backtracking, such as permutation problems, combination problems, and subset problems.
+
+## What is Backtracking?
+Backtracking is a general algorithmic technique that is used to solve problems by incrementally building candidates to the
+solutions, and abandoning a candidate as soon as it is determined that it cannot lead to a valid solution.
+It is often used to solve problems that involve searching through a large space of possible solutions,
+such as combinatorial problems, constraint satisfaction problems, and optimization problems.
+
+The main idea behind backtracking is to model the problem as a decision tree, where each node represents a partial solution,
+and the edges represent the choices that can be made at each step.
+We then use a **depth-first search** approach to explore all possible options, and if we find a valid solution, we record it.
+If not, we "undo" the decision made (backtrack) and try another option.
+
+The key mental model is:
+```
+Make a choice -> Explore results -> Undo the choice (backtrack)
+```
+
+## Backtracking Algorithm
+The backtracking algorithm is typically implemented as a recursive DFS. The general structure can be divided into two main components.
+
+**The base case**<br/>
+The base case is where we check if the current candidate solution is valid. If it is, we record it as a valid solution and return.
+
+**Testing all possible options**<br/>
+If the current candidate solution is not valid, we need to explore all possible options by making a choice,
+making a choice will usually modify the candidate solution and the remaining choices,
+then we will explore the results of that choice by recursively calling the backtracking function with the updated candidate solution and remaining choices.
+After exploring the results of that choice, we need to undo the choice (backtrack) to restore the candidate solution
+and remaining choices to their previous state before trying another option.
+
+```python
+def backtrack(input, candidate, choices, results):
+    if solution_found: # base case: if the current candidate is a valid solution
+        record_result(candidate)
+        return
+
+    for choice in choices:
+        # modify the candidate and choices based on the current choice
+        make_choice(choice)
+        backtrack(input, updated_candidate, remaining_choices, results)
+        # revert the candidate and choices to their previous state before the next iteration
+        undo_choice(choice)
+```
+
+This is just a template to help us understand the core logic of the backtracking algorithm.
+The actual implementation will depend on the specific problem we are trying to solve.
+
+What changes from one problem to another is how we define the `solution_found` condition, how we `record_result`,
+and how we `make_choice` and `undo_choice`.
+The core idea remains the same: we explore all possible options, and if we find a valid solution, we record it.
+If not, we backtrack and try another option.
+
+## Variations of Backtracking
+Backtracking is used when we need to explore all possible options to find a solution, but the way we define what a
+solution is and how we explore the options can vary greatly depending on the problem.
+I think this is one of the most crucial parts: know how to tweak the backtracking algorithm to solve different types of problems.
+
+We will explore these variations in the subposts:
+
+- [Permutation Problems](./permutation_problems.mdx)
+- [Combination Problems](./combination_problems.mdx)
+- [Subset Problems](./subset_problems.mdx)
