@@ -5,19 +5,116 @@ date: 2026-02-22
 tags: [DSA]
 authors: ['vdmaciel']
 image: './assets/banner.jpg'
-draft: true
+order: 2
 ---
+import Callout from '@/components/Callout.astro'
 
 ## Introduction
+A combination can be defined as the selection of items from a collection, such that the order of selection does not matter.
+To form a combination we need the source collection and a number `k` that represents the number of items to be selected from the source collection.
 
+For example, if we have a source collection of 3 items: `{A, B, C}`,, and we want to find all the combinations of `2` items,
+we would have the following combinations: `{A, B}`, `{A, C}`, and `{B, C}`.
+
+The concept is very present in many backtracking problems. One of them is called **"Combination Sum"**.
+
+<Callout title="Problem Statement" variant="proposition">
+  Given an array of **distinct** integers `candidates` and a target integer `target`, return a list of all **unique combinations**
+  of `candidates` where the chosen numbers sum to `target`. You may return the combinations in **any order**.
+
+  The **same** number may be chosen from candidates an **unlimited number of times**.
+  Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+
+  Example 1:
+
+  >Input: candidates = [2,3,6,7], target = 7 <br/>
+  >Output: [[2,2,3],[7]] <br/>
+  >Explanation: <br/>
+  >2 and 3 are candidates, and 2 + 2 + 3 = 7. Note that 2 can be used multiple times. <br/>
+  >7 is a candidate, and 7 = 7. <br/>
+  >These are the only two combinations. <br/>
+</Callout>
+
+Now that we have a clear understanding of the problem, let's see how we can use backtracking to solve it step by step.
 
 ## Building the decision tree
+Now, let's build the decision tree for this problem. The decision tree is a visual representation of all the possible
+decisions we can make at each step of the algorithm.
 
+In this case, we can start with an empty list and at each step we can add one of the numbers to the list
+until we have a complete combination that sums to the target.
+
+![Combination Decision Tree](./assets/combination_decision_tree.png)
+
+From the decision tree, we can see that we must to keep track of three things:
+1. The current combination we are building (candidate).
+2. The numbers that we can use to build the combination (choices).
+3. The list of all the complete combinations we have found so far (results).
+
+As always, these three components are essential to our algorithm, the DFS function must always receive these three values as parameters,
+and we must update them accordingly at each step of the algorithm.
 
 ## Identifying the base case
+The base case is the condition that will stop the recursion. In this problem, the base case is when we have a complete
+combination that sums to the target, which means that the sum of the current combination is equal to the target. When we reach this base
+case, we can add the current combination to our results list.
 
+```python
+if sum(candidate) == target:  # verify if we have a complete combination that sums to the target
+    results.append(candidate.copy())  # add the current combination to the results list
+    return  # stop the recursion
+```
+
+Another base case is when the sum of the current combination exceeds the target, in this case we can stop the recursion as well,
+since we know that adding more numbers will only increase the sum.
+
+```python
+if sum(candidate) > target:  # verify if the sum of the current combination exceeds the target
+    return  # stop the recursion
+```
 
 ## Exploring the decision tree
+To explore the decision tree, we need to iterate over the numbers (choices) and for each number, we need to:
+1. Add the number to the current combination (candidate).
+2. Recursively call the DFS function with the updated candidate and choices.
+3. Remove the number from the current combination (backtrack) and continue to the next number (backtrack).
 
+```python
+def backtrack(candidates, target, candidate, results):
+    ...
+    for num in candidates:
+        # make a choice
+        candidate.append(num)  # add the number to the current combination
+
+        # explore the decision tree
+        backtrack(candidates, target, candidate, results)
+
+        # backtrack
+        candidate.pop()           # remove the number from the current combination
+```
 
 ## Final implementation
+```python
+def combinationSum(candidates, target):
+    results = []
+    backtrack(candidates, target, [], results)
+    return results
+
+def backtrack(candidates, target, candidate, results):
+    if sum(candidate) == target:  # verify if we have a complete combination that sums to the target
+        results.append(candidate.copy())  # add the current combination to the results list
+        return  # stop the recursion
+
+    if sum(candidate) > target:  # verify if the sum of the current combination exceeds the target
+        return  # stop the recursion
+
+    for num in candidates:
+        # make a choice
+        candidate.append(num)  # add the number to the current combination
+
+        # explore the decision tree
+        backtrack(candidates, target, candidate, results)
+
+        # backtrack
+        candidate.pop()  # remove the number from the current combination
+```
