@@ -1,7 +1,7 @@
 ---
 title: 'Combination Problems'
 description: ''
-date: 2026-02-22
+date: 2026-02-24
 tags: [DSA]
 authors: ['vdmaciel']
 image: './assets/banner.jpg'
@@ -44,9 +44,26 @@ decisions we can make at each step of the algorithm.
 In this case, we can start with an empty list and at each step we can add one of the numbers to the list
 until we have a complete combination that sums to the target.
 
+Let's say we have the candidates `[1, 2, 3]` and the target `4`.
+
+In the first level of the decision tree, we can add `1`, `2`, or `3` to the current combination.
+So we have three branches in the first level of the tree.
+
+![Combination Decision Tree - First Layer](./assets/combination_decision_tree_a.png)
+
+Adding only one number to the current combination is not enough to reach the target, so we need to keep adding numbers until we reach the target or exceed it.
+
+Since the problem states that we can use the same number multiple times, we can add the same number again to the current combination,
+which means that for each node in the decision tree we should run the algorithm again with the same candidates and the updated current combination.
+
 ![Combination Decision Tree](./assets/combination_decision_tree.png)
 
-From the decision tree, we can see that we must to keep track of three things:
+From the decision tree, we can note that we have two scenarios where we should stop the recursion:
+- When we have a complete combination that sums to the target, which means that the sum of the current combination is equal to the target.
+- When the sum of the current combination exceeds the target, in this case we can stop the recursion as well,
+since we know that adding more numbers will only increase the sum.
+
+To build and navigate through the decision tree, we must to keep track of three things:
 1. The current combination we are building (candidate).
 2. The numbers that we can use to build the combination (choices).
 3. The list of all the complete combinations we have found so far (results).
@@ -56,21 +73,26 @@ and we must update them accordingly at each step of the algorithm.
 
 ## Identifying the base case
 The base case is the condition that will stop the recursion. In this problem, the base case is when we have a complete
-combination that sums to the target, which means that the sum of the current combination is equal to the target. When we reach this base
+combination that sums to the target, which means that the sum of the current combination is equal to the target.
+
+When we reach this base
 case, we can add the current combination to our results list.
 
 ```python
-if sum(candidate) == target:  # verify if we have a complete combination that sums to the target
-    results.append(candidate.copy())  # add the current combination to the results list
-    return  # stop the recursion
+    # verify if we have a complete combination that sums to the target
+    if sum(candidate) == target:
+        # add the current combination to the results list
+        results.add(tuple(sorted(candidate)))
+        return  # stop the recursion
 ```
 
 Another base case is when the sum of the current combination exceeds the target, in this case we can stop the recursion as well,
 since we know that adding more numbers will only increase the sum.
 
 ```python
-if sum(candidate) > target:  # verify if the sum of the current combination exceeds the target
-    return  # stop the recursion
+    # verify if the sum of the current combination exceeds the target
+    if sum(candidate) > target:
+        return  # stop the recursion
 ```
 
 ## Exploring the decision tree
@@ -94,18 +116,23 @@ def backtrack(candidates, target, candidate, results):
 ```
 
 ## Final implementation
+With all the components in place, we can now implement the final solution to the problem.
+
 ```python
 def combinationSum(candidates, target):
-    results = []
+    results = set()
     backtrack(candidates, target, [], results)
-    return results
+    return [list(combination) for combination in results]
 
 def backtrack(candidates, target, candidate, results):
-    if sum(candidate) == target:  # verify if we have a complete combination that sums to the target
-        results.append(candidate.copy())  # add the current combination to the results list
+    # verify if we have a complete combination that sums to the target
+    if sum(candidate) == target:
+        # add the current combination to the results list
+        results.add(tuple(sorted(candidate)))
         return  # stop the recursion
 
-    if sum(candidate) > target:  # verify if the sum of the current combination exceeds the target
+    # verify if the sum of the current combination exceeds the target
+    if sum(candidate) > target:
         return  # stop the recursion
 
     for num in candidates:

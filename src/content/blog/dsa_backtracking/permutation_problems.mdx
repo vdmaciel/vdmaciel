@@ -1,7 +1,7 @@
 ---
 title: 'Permutation Problems'
 description: ''
-date: 2026-02-22
+date: 2026-02-24
 tags: [DSA]
 authors: ['vdmaciel']
 image: './assets/banner.jpg'
@@ -40,6 +40,26 @@ In the following sections we will discover how to use backtracking to solve this
 The first step to solve this problem is to build the decision tree, which is a visual representation of all the possible
 decisions we can make at each step of the algorithm. In this case, we can start with an empty list and at each step we can
 add one of the remaining numbers to the list until we have a complete permutation.
+
+Let's build the decision tree for the input `[1, 2, 3]`:
+
+When we start our candidate permutation is empty, and we have three available: `1`, `2`, and `3`.
+We can choose any of these numbers to add to our candidate permutation. So we create three branches in our decision tree, one for each choice.
+
+![Permutation Decision Tree - First Layer](./assets/permutation_decision_tree_a.png)
+
+To understand the remaining layers, we will focus on the first branch of the decision tree, which is when we choose `1` as the first number of our permutation.
+In this case, our candidate permutation is now `[1]`, and we have two remaining numbers: `2` and `3`.
+
+We can choose any of these numbers to add to our candidate permutation, so we create two branches in our decision tree, one for each choice.
+
+![Permutation Decision Tree - Second Layer](./assets/permutation_decision_tree_b.png)
+
+And finally for each of the branches we can choose the remaining number to add to our candidate permutation, which will give us a complete permutation.
+
+![Permutation Decision Tree - Third Layer](./assets/permutation_decision_tree_c.png)
+
+Let's summarize the decision tree for the input `[1, 2, 3]`:
 
 ![Permutation Decision Tree](./assets/permutation_decision_tree.png)
 
