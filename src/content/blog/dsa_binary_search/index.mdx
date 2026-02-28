@@ -1,9 +1,39 @@
 ---
 title: 'DSA - Binary Search'
 description: 'Understand the binary search algorithm, its implementation, and how to apply it effectively in various scenarios.'
-date: 2026-02-22
+date: 2026-02-28
 tags: [DSA]
 authors: ['vdmaciel']
 image: './assets/banner.jpg'
-draft: true
 ---
+import Callout from '@/components/Callout.astro'
+
+## Introduction
+Binary search is a powerful algorithm used to efficiently find the position of a target value within a sorted array.
+It works by repeatedly dividing the search interval in half, which allows it to quickly narrow down the possible locations of the target value.
+The time complexity of binary search is O(log n), making it much faster than linear search for large datasets.
+
+## The search space
+This is the main concept that we must understand to be able to implement and customize our binary search algorithms.
+
+The search space is the portion of the data structure that we are currently examining to find the target value.
+In the context of binary search, the search space is defined by two pointers: `left` and `right`, which represent the
+indices of the current interval of the array being searched.
+
+This interval is continuously halved until we find the target value or determine that it is not present in the array.
+The efficiency of binary search relies on the fact that the data structure is sorted, allowing us to make informed decisions
+about which half of the search space to explore next.
+
+This search space interval can be open or closed, depending on the implementation. In a closed interval, both `left` and `right` are inclusive,
+meaning that the search includes the elements at both indices. In an open interval,
+one of the pointers is exclusive, which can lead to different conditions for the loop termination.
+
+## Variations of Binary Search
+Binary search can be adapted to solve various problems beyond just finding a target value in a sorted array. Some common variations include:
+- [Finding a target value (classic binary search)](./dsa_binary_search/search_by_value)
+- [Finding the first value that satisfies a condition.](./dsa_binary_search/search_by_boundary)
+- Finding the smallest or largest element in a rotated sorted array.
+- Finding the peak element in an array.
+- Finding the square root of a number using binary search.
+
+In the following subposts, we will explore some of these variations in detail, providing implementations and explanations for each scenario.
