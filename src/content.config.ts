@@ -13,21 +13,7 @@ const blog = defineCollection({
       tags: z.array(z.string()).optional(),
       authors: z.array(z.string()).optional(),
       draft: z.boolean().optional(),
-    }),
-})
-
-const notes = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/notes' }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      description: z.string(),
-      date: z.coerce.date(),
-      order: z.number().optional(),
-      image: image().optional(),
-      tags: z.array(z.string()).optional(),
-      authors: z.array(z.string()).optional(),
-      draft: z.boolean().optional(),
+      note: z.boolean().optional(),
     }),
 })
 
@@ -61,4 +47,4 @@ const projects = defineCollection({
     }),
 })
 
-export const collections = { blog, authors, projects, notes }
+export const collections = { blog, authors, projects }

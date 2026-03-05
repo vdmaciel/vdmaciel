@@ -6,7 +6,7 @@ export const SITE: Site = {
   href: 'https://astro-erudite.vercel.app',
   author: 'Victor Maciel',
   locale: 'en-US',
-  featuredPostCount: 3,
+  featuredPostCount: 5,
   postsPerPage: 10,
 }
 
@@ -16,8 +16,8 @@ export const NAV_LINKS: SocialLink[] = [
     label: 'blog',
   },
   // {
-  //   href: '/notes',
-  //   label: 'notes',
+  //   href: '/_notes',
+  //   label: '_notes',
   // },
   // {
   //   href: '/projects',

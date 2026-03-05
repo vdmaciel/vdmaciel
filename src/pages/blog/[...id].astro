@@ -109,7 +109,7 @@ const tocSections = await getTOCSections(currentPostId)
     </div>
 
     {
-      post.data.image && (
+      post.data.image && !post.data.note && (
         <Image
           src={post.data.image}
           alt={post.data.title}
