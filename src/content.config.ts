@@ -30,6 +30,7 @@ const authors = defineCollection({
     github: z.string().url().optional(),
     linkedin: z.string().url().optional(),
     discord: z.string().url().optional(),
+    draft: z.boolean().optional(),
   }),
 })
 
@@ -44,6 +45,7 @@ const projects = defineCollection({
       link: z.string().url(),
       startDate: z.coerce.date().optional(),
       endDate: z.coerce.date().optional(),
+      draft: z.boolean().optional(),
     }),
 })
 
