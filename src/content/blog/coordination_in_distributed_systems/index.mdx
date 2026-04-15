@@ -1,0 +1,135 @@
+---
+title: 'Coordination in Distributed Systems'
+description: 'Coordination in distributed systems is a fundamental challenge due to the inherent unreliability of communication channels. This article explores the Two Generals Problem and its implications for distributed computing.'
+date: 2026-04-15
+tags: [Distributed Systems, Consensus, Reliability]
+authors: ['vdmaciel']
+image: './assets/banner.jpg'
+draft: true
+---
+import Callout from '@/components/Callout.astro'
+
+## Why Coordination is Hard in Distributed Environments
+Distributed systems may seem great in theory. Multiple computers working together so smoothly that you would think they were one computer.
+However, once distributed systems have networks separating them from each other, things quickly become confusing. In addition to delay, lost communications,
+duplicate communications, and out-of-order communications there will be uncertainty. It is this uncertainty which will introduce many problems such as
+the Two Generals Problem.
+
+If you could imagine coordinating a meeting with someone who had an unreliable mail system (i.e., messages sent at random times), you would send a
+confirmation message, however, you would never know whether they received your confirmation. They would then send you a reply message; however, again,
+you would have no idea whether your reply was received. This "indefinite" loop of doubt has a very real correlation in the world of distributed systems
+where nodes need to agree upon some type of common state.
+
+Coordination in distributed computing refers to the act of achieving agreement amongst all nodes (computers) in a distributed environment.
+Coordination occurs when all nodes reach consensus regarding a value or decision. Consensus is typically used for critical activities within a
+distributed environment including but not limited to committing transactions to databases and verifying blocks in a blockchain.
+While consensus is obviously a fundamental component of distributed environments, achieving reliable consensus under conditions where communication
+is not guaranteed is extremely challenging.
+
+As distributed environments grow in size, the challenges related to reliability also increase. As the number of nodes in a distributed environment
+increases exponentially with each node added to the environment, the number of possible communication paths also increases exponentially.
+Additionally, as the number of possible communication paths increases, so do the potential failure points associated with these communication paths.
+Latency, packet loss, and network partitioning also create fragility in the process of coordination.
+Therefore, while the problems discussed here may appear abstractly interesting and therefore simply academic exercises,
+they represent significant limitations in what can actually be achieved through distributed systems.
+
+## Real-World Examples of Distributed Failures
+If you think distributed failure sounds far fetched, there's no shortage of examples in real world applications.
+Consider a bank's payment processing when two servers confirm a transfer and yet one server does not.
+This may also occur with a cloud service down where some parts of the system function correctly while other parts are shut down entirely.
+
+Amazon has had several instances where communication errors caused cascaded failures among distributed application components.
+Google's use of their product spanner and Apache Kafka have developed specific consensus protocols based on their knowledge of this type of problem.
+Sending an e-mail is a very good example of the types of problems related to distributed failures.
+Once sent, do your recipients know they received the message? Even if you receive a "sent" or "delivered" confirmation from your mail service provider,
+that doesn't mean they opened it. Scaling up to tens of millions of transactions/second and the implications are significant.
+
+## The Two Generals Problem
+The Two Generals Problem may seem very simple yet has great depth. Think of two generals who are stationed on opposite sides of hills,
+each preparing to attack a city located between them. In order for both generals to have success with their simultaneous attack against the city,
+they must attack at the same time; otherwise, one will lose.
+
+There is only one method which allows the generals to synchronize their actions: to send messages through the valley. However,
+because of the danger from the enemy in the valley, all or part of a messenger's message(s) could potentially be lost. Therefore,
+neither general knows if his message (or her message), and/or the acknowledgment of that message were actually delivered to the other general.
+
+For example, suppose General A sent a message: "Attack at Dawn." General B then sends back a confirmation: "Okay I got it!" Now assume that
+this confirmation was lost. Since General A cannot confirm that General B received General A's original message, he therefore may send another
+acknowledgment of General B's acknowledgment and so on. This situation would create an infinite loop. Regardless of the number of messages exchanged,
+General A will never know if General B received the last message.
+
+## Why Reliable Communication Fails
+The basic idea behind the two generals problem illustrates how it's impossible to achieve reliable communication in a communications system
+with unreliable connections. Even if you have high-reliability connection for most of your transmissions there is still the potential for a
+small amount of unreliability which can create uncertainty as to whether or not a message was delivered reliably.
+
+Reliability in today's network architecture is based upon many different methods. One example of this is TCP protocol.
+The TCP protocol uses a method called acknowledgment/retransmission to assure reliability.
+However, even though this assures that the majority of the data will reach its destination, it does not provide complete assurance
+that all data sent will be received by the intended recipient. In fact, the best that TCP can do is provide some level of probable reliability.
+Therefore, no matter what measures are taken to increase the reliability of data transmission over a network, there will always be a remote possibility of failure.
+
+The limitations imposed by lack of complete reliability when using networks to communicate, severely limits our ability
+to design and build completely reliable distributed systems. Distributed systems therefore need to be able to account for lack of complete reliability.
+As such, developers and designers typically implement various forms of redundancy, timeouts, and retries to help approximate
+reliability within their systems rather than attempting to establish true reliability.
+
+Practically speaking, engineers know that perfect coordination is never possible; however, they also understand that they
+should strive for building systems that perform well "enough" during typical usage scenarios. As a result of this understanding,
+many systems (distributed) operate on an eventually consistent basis. While these systems may not consistently produce the correct
+output at exactly the same moment in time, they tend to converge toward consistency as needed.
+
+## Mathematical Insight into Impossibility
+The Two Generals Problem is a classic example of an impossibility proof from the standpoint of mathematics.
+In this case, the problem demonstrates that there is no way to develop a method of communication that guarantees both sides agree when
+the channel through which they communicate is unreliable and each side requires confirmation before making a decision.
+
+Inductive reasoning underlies the proof. Since the final transmission can be dropped, it does not provide assurance that both will
+reach agreement. However, since the last transmission does not assure agreement, neither do prior transmissions.
+Inductive reasoning proceeds infinitely backwards (i.e., forever), demonstrating that no finite number of communications can result in absolute assurance.
+
+As such, the implications of the Two Generals Problem were felt throughout the field of Distributed Computing.
+Notably, the FLP Impossibility Theorem resulted from these implications.
+This theorem states that in any Asynchronous System where at least one process fails, obtaining Consensus is impossible.
+
+Therefore, while the Two Generals Problem may seem as though it is nothing but a simplistic representation of a common military strategy,
+it illustrates a fundamental truth: some problems associated with Distributed Systems are fundamentally incapable of having a "perfect" solution.
+
+## Impact on Network Protocol Design
+In a fundamental way, the Two Generals Problem affects how engineering teams develop their communications protocols.
+Rather than striving toward complete reliability (which is not possible mathematically), protocol developers concentrate upon
+fault tolerant designs with probabilities of success guaranteed.
+
+TCP, as another example, provides assurances regarding proper receipt of information using acknowledgment packets,
+re-transmission of lost or damaged packets, and packet sequencing numbers. However, it does so under the assumption of some delay
+in delivery and at some point will deliver all packets successfully. It cannot provide absolute assurance of receiving the correct packets every time.
+
+The implications of this lack of absolute assurance has significant influence upon how distributed database systems are designed.
+Cassandra and DynamoDB both utilize eventual consistency models. Eventually consistent models rely upon gradual synchronization of
+nodes over time rather than requiring immediate consistency. The decision to use eventual consistency models is a direct reflection
+of the impossibility established by the Two Generals Problem.
+
+Idempotence (ensuring that repeated execution of an operation results in the same outcome) is another important consideration.
+Because systems may execute operations repeatedly as a result of uncertainty, ensuring idempotence ensures that multiple executions do not produce additional problems.
+
+## Practical Workarounds in Modern Systems
+So what do actual systems do to address this completely unsolvable problem? Systems cheat, but they are very creative in their cheating.
+
+Instead of achieving absolute confidence that some event has occurred or will occur, systems use:
+
+- **Timeouts**: If a system does not receive a reply from another system within a predetermined amount of time (or period) it assumes that the other system has failed.
+- **Redundancy**: A message can be sent by a single source via multiple paths to ensure that if one path fails, the message will still arrive at its destination.
+- **Consensus** Protocols: Instead of needing all systems to agree on something before proceeding; consensus protocols need most of the systems (a majority) to agree on something before proceeding.
+
+The above methods do not remove uncertainty; instead, they work to manage uncertainty. For example, in distributed database environments, a
+write operation would be accepted (and thus considered successful) when the majority of nodes that were involved in the write operation
+acknowledged receipt of the write operation. By using this approach, a system could minimize the chance of inconsistent data being written
+into the database environment; however, the system would not have to achieve complete and/or perfect communication in order to accomplish this goal.
+
+A second method used to resolve this type of problem is manual intervention. In many cases, where critical systems exist; the occurrence
+of an unresolved state may result in a manual review process. This is obviously not practical for all types of problems; however,
+this provides an important insight: sometimes the best way to solve a problem is not by implementing additional automated processes,
+but rather by providing humans a role in the decision-making process.
+
+In conclusion, the Two Generals Problem is a sobering reminder that **systems should be designed with failure in mind**, as
+opposed to designing systems based upon the assumption that failures will never occur.
